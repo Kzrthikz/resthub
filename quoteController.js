@@ -37,8 +37,10 @@ res.json({
 // Handle view quote info
 exports.view = function (req, res) {
     Quote.findById(req.params.quote_id, function (err, quote) {
-        if (err)
-            res.send(err);
+        if (err) {
+            return res.status(400).send({message: "Quote not found."});
+        }
+            // res.send(err);
         res.json({
             message: 'Quote details loading..',
             data: quote
@@ -71,8 +73,10 @@ exports.delete = function (req, res) {
     Quote.remove({
         _id: req.params.quote_id
     }, function (err, quote) {
-        if (err)
-            res.send(err);
+        if (err) {
+            return res.status(400).send({message: "Quote not found. Unable to delete. "});
+        }
+            // res.send(err);
 res.json({
             status: "success",
             message: 'Quote deleted'
